@@ -5,7 +5,6 @@ class CreateTeams < ActiveRecord::Migration[5.1]
       t.string :abbrev
       t.string :badge
       t.integer :points, default: 0
-      t.references :group, foreign_key: true
 
       t.timestamps
     end

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180523084803) do
+ActiveRecord::Schema.define(version: 20180523092414) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.integer "winner_id"
     t.integer "runner_id"
+    t.integer "round_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["round_id"], name: "index_groups_on_round_id"
   end
 
   create_table "leagues", force: :cascade do |t|
@@ -81,10 +83,17 @@ ActiveRecord::Schema.define(version: 20180523084803) do
     t.string "abbrev"
     t.string "badge"
     t.integer "points", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "unions", force: :cascade do |t|
+    t.integer "team_id"
     t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_teams_on_group_id"
+    t.index ["group_id"], name: "index_unions_on_group_id"
+    t.index ["team_id"], name: "index_unions_on_team_id"
   end
 
   create_table "users", force: :cascade do |t|
