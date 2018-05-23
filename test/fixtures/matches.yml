@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kickoff_time: MyString
+  team_home_score: 1
+  team_away_score: 1
+  finished: false
+  started: false
+  group: one
+  team_home_id: 1
+  team_away_id: 1
+  round: one
+
+two:
+  kickoff_time: MyString
+  team_home_score: 1
+  team_away_score: 1
+  finished: false
+  started: false
+  group: two
+  team_home_id: 1
+  team_away_id: 1
+  round: two
