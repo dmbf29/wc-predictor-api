@@ -1,5 +1,5 @@
 module Api::V1
-  class TeamsController < ApplicationController
+  class GroupsController < ApplicationController
     def index
       @groups = Group.all
       render json: @groups
