@@ -43,6 +43,10 @@ teams = [
     name: 'Egypt',
     abbrev: 'EGY'
   },
+    {
+    name: 'England',
+    abbrev: 'ENG'
+  },
   {
     name: 'Spain',
     abbrev: 'ESP'
@@ -134,9 +138,10 @@ teams = [
 ]
 
 teams.each do |team|
-  Team.where(
+  team = Team.where(
     name: team[:name],
     abbrev: team[:abbrev],
     points: 0
   ).first_or_create
+  puts team.name
 end
