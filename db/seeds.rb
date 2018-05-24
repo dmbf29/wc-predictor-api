@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+puts 'Teams'
 teams = [
   {
     name: 'Argentina',
@@ -143,5 +143,81 @@ teams.each do |team|
     abbrev: team[:abbrev],
     points: 0
   ).first_or_create
-  puts team.name
+  # puts team.name
 end
+puts 'End of Teams'
+
+puts 'Rounds'
+round_one = Round.where(
+              number: 1,
+              name: 'Group Stage',
+              current: true
+            ).first_or_create
+
+round_two = Round.where(
+              number: 2,
+              name: 'Round of Sixteen'
+            ).first_or_create
+
+round_three = Round.where(
+              number: 3,
+              name: 'Quarterfinals'
+            ).first_or_create
+
+round_four = Round.where(
+              number: 4,
+              name: 'Semifinals'
+            ).first_or_create
+
+round_five = Round.where(
+              number: 5,
+              name: 'Final'
+            ).first_or_create
+puts 'End of Rounds'
+
+puts 'Groups'
+group_a = Group.where(
+           name: 'Group A',
+           round: round_one
+          ).first_or_create
+
+group_b = Group.where(
+           name: 'Group B',
+           round: round_one
+          ).first_or_create
+
+group_c = Group.where(
+           name: 'Group C',
+           round: round_one
+          ).first_or_create
+
+group_d = Group.where(
+           name: 'Group D',
+           round: round_one
+          ).first_or_create
+
+group_e = Group.where(
+           name: 'Group E',
+           round: round_one
+          ).first_or_create
+
+group_f = Group.where(
+           name: 'Group F',
+           round: round_one
+          ).first_or_create
+
+group_g = Group.where(
+           name: 'Group G',
+           round: round_one
+          ).first_or_create
+
+group_h = Group.where(
+           name: 'Group H',
+           round: round_one
+          ).first_or_create
+
+puts 'End of groups'
+
+
+
+
