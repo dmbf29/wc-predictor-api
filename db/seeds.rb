@@ -213,24 +213,40 @@ group_h = Group.where(
 
 puts 'End of groups'
 
-url = "https://www.fifa.com/worldcup/matches/"
+url = 'https://www.fifa.com/worldcup/matches/'
 
+puts 'Reading Fifa website...'
 html_file = open(url).read
 html_doc = Nokogiri::HTML(html_file)
 
+puts 'Looking at fixtures...'
 html_doc.search('.fi-mu.fixture').each do |element|
-  time = element.search('.fi-mu__info').search('.fi-mu__info__datetime').text.strip.split("\r")[0]
+  time = element.search('.fi-mu__info').search('.fi-mu__info__datetime').text.strip.split('\r')[0]
   time = Time.parse(time).to_s
   group_name = element.search('.fi-mu__info').search('.fi__info__group').text.strip
-  team_home = element.search('.fi-t.fi-i--4.home').search('.fi-t__nText').text.strip
-  team_away = element.search('.fi-t.fi-i--4.away').search('.fi-t__nText').text.strip
+  team_home_name = element.search('.fi-t.fi-i--4.home').search('.fi-t__nText').text.strip
+  team_away_name = element.search('.fi-t.fi-i--4.away').search('.fi-t__nText').text.strip
 
+  puts 'Groups..'
+  group = Group.find_by(name: group_name)
+  team_home = Team.find_by(name: team_home_name)
+  team_away = Team.find_by(name: team_away_name)
+
+  next if team_home.blank? || team_away.nil?
+
+  puts 'Unions...'
+  Union.where(
+    team: team_home,
+    group: group
+  ).first_or_create
+
+  puts 'Matches...'
   Match.where(
     kickoff_time: time,
-    group: Group.find_by(name: group_name),
-    team_home_id: Team.find_by(name: team_home).id,
-    team_away_id: Team.find_by(name: team_away).id,
-    round: round_one
+    group: group,
+    round: round_one,
+    team_home_id: team_home.id,
+    team_away_id: team_away.id
   ).first_or_create
 end
 
