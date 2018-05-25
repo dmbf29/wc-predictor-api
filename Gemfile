@@ -20,7 +20,8 @@ gem 'puma', '~> 3.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
+gem 'active_model_serializers', '0.9.3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
