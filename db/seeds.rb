@@ -132,6 +132,103 @@ URU = Team.where(
         abbrev: 'URU'
       ).first_or_create
 
+A1 = Team.where(
+        name: 'Group A Winner',
+        abbrev: '1A'
+      ).first_or_create
+
+A2 = Team.where(
+        name: 'Group A Runner-up',
+        abbrev: '2A'
+      ).first_or_create
+
+B1 = Team.where(
+        name: 'Group B Winner',
+        abbrev: '1B'
+      ).first_or_create
+
+B2 = Team.where(
+        name: 'Group B Runner-up',
+        abbrev: '2B'
+      ).first_or_create
+
+C1 = Team.where(
+        name: 'Group C Winner',
+        abbrev: '1C'
+      ).first_or_create
+
+C2 = Team.where(
+        name: 'Group C Runner-up',
+        abbrev: '2C'
+      ).first_or_create
+
+D1 = Team.where(
+        name: 'Group C Winner',
+        abbrev: '1C'
+      ).first_or_create
+
+D2 = Team.where(
+        name: 'Group D Runner-up',
+        abbrev: '2D'
+      ).first_or_create
+
+E1 = Team.where(
+        name: 'Group E Winner',
+        abbrev: '1E'
+      ).first_or_create
+
+E2 = Team.where(
+        name: 'Group E Runner-up',
+        abbrev: '2E'
+      ).first_or_create
+
+F1 = Team.where(
+        name: 'Group F Winner',
+        abbrev: '1F'
+      ).first_or_create
+
+F2 = Team.where(
+        name: 'Group F Runner-up',
+        abbrev: '2F'
+      ).first_or_create
+
+G1 = Team.where(
+        name: 'Group H Winner',
+        abbrev: '1H'
+      ).first_or_create
+
+G2 = Team.where(
+        name: 'Group H Runner-up',
+        abbrev: '2H'
+      ).first_or_create
+
+H1 = Team.where(
+        name: 'Group G Winner',
+        abbrev: '1G'
+      ).first_or_create
+
+H2 = Team.where(
+        name: 'Group G Runner-up',
+        abbrev: '2G'
+      ).first_or_create
+
+%w(49..62).to_a.each do |w|
+  Team.where(
+    name: ('Winner of ' + w),
+    abbrev: w
+  ).first_or_create
+end
+
+L1 = Team.where(
+        name: 'Loser of 61',
+        abbrev: 'L61'
+      ).first_or_create
+
+L2 = Team.where(
+        name: 'Loser of 62',
+        abbrev: 'L62'
+      ).first_or_create
+
 # teams.each do |team|
 #   team = Team.where(
 #     name: team[:name],
