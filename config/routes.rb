@@ -6,7 +6,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :teams
       resources :matches
-      resources :group
+      resources :groups
+      resources :predictions
     end
   end
 end
