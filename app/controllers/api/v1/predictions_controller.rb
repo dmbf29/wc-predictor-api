@@ -16,8 +16,9 @@ module Api::V1
       params.require(:prediction).permit(:winner_id,
                                          :loser_id,
                                          :draw,
+                                         :match_id,
                                          :round_id,
-                                         :corret,
+                                         :correct,
                                          :user_id)
     end
   end
