@@ -4,7 +4,7 @@ module Api
       embed :ids, include: true
 
       attributes :id,
-                :kickoff_time,
+                 :kickoff_time,
                  :team_home_score,
                  :team_away_score,
                  :started,
@@ -12,13 +12,13 @@ module Api
                  :team_home,
                  :team_away,
                  :group,
-                 :round
+                 :round,
+                 :prediction
 
+      def prediction
+        object.predictions.find_by(user_id: 1)
+      end
 
-      # has_one :team_home, serializer: TeamSerializer
-      # has_one :team_away, serializer: TeamSerializer
-      # has_one :group, serializer: GroupSerializer
-      # has_one :round, serializer: RoundSerializer
       def kickoff_time
         object.kickoff_time.in_time_zone('Europe/Moscow').strftime("%d %b %R")
       end
