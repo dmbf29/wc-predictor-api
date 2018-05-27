@@ -10,6 +10,12 @@ module Api::V1
       render json: @prediction, serializer: Api::V1::PredictionSerializer
     end
 
+    def update
+      @prediction = Prediction.find(params[:id])
+      @prediction.update(prediction_params)
+      render json: @prediction, serializer: Api::V1::PredictionSerializer
+    end
+
     private
 
     def prediction_params
