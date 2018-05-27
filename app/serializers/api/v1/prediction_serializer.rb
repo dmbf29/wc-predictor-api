@@ -3,7 +3,8 @@ module Api
     class PredictionSerializer < ActiveModel::Serializer
       embed :ids, include: true
 
-      attributes :winner_id,
+      attributes :id,
+                 :winner_id,
                  :loser_id,
                  :draw,
                  :correct,
