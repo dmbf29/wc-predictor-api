@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :matches
       resources :groups
       resources :predictions
+      post 'predictions/:id', to: 'predictions#update'
     end
   end
 end
