@@ -1,13 +1,13 @@
 module Api::V1
   class PredictionsController < ApplicationController
-    # def index
-    #   predictions = Prediction.all
-    #   render json: predictions, each_serializer: Api::V1::PredictionSerializer
-    # end
+    def index
+      predictions = Prediction.all
+      render json: predictions, each_serializer: Api::V1::PredictionSerializer
+    end
 
     def create
       @prediction = Prediction.create(prediction_params)
-      render json: @prediction
+      render json: @prediction, serializer: Api::V1::PredictionSerializer
     end
 
     private
