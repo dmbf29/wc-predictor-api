@@ -11,4 +11,8 @@ Rails.application.routes.draw do
       post 'predictions/:id', to: 'predictions#update'
     end
   end
+
+  scope :auth do
+    get 'signed_in', to: 'auth#signed_in?'
+  end
 end
