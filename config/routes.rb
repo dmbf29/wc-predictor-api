@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :groups
       resources :predictions
       post 'predictions/:id', to: 'predictions#update'
+      post 'users', to: 'users#create'
       post 'user_token' => 'user_token#create'
     end
   end
