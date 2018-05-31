@@ -16,7 +16,7 @@ module Api
                  :prediction
 
       def prediction
-        object.predictions.find_by(user_id: 1)
+        object.predictions.find_by(user: scope)
       end
 
       def kickoff_time
