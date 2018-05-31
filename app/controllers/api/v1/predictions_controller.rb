@@ -1,5 +1,7 @@
 module Api::V1
   class PredictionsController < ApplicationController
+    before_action :authenticate_user
+
     def index
       predictions = Prediction.all
       render json: predictions, each_serializer: Api::V1::PredictionSerializer

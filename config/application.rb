@@ -30,10 +30,6 @@ module WcPredictorApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    config.to_prepare do
-      DeviseController.respond_to :html, :json
-    end
-
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'http://localhost:3000'
