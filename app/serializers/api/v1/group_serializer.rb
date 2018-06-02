@@ -1,13 +1,13 @@
 module Api
   module V1
     class GroupSerializer < ActiveModel::Serializer
-      embed :ids, include: true
-
       attributes :id,
-                 :name
+                 :name,
+                 :winner_id,
+                 :runner_id,
+                 :round_id
 
-      has_one :winner, serializer: TeamSerializer, embed: :ids, include: false
-      has_one :runner_up, serializer: TeamSerializer, embed: :ids, include: false
+      has_many :matches, serializer: Api::V1::MatchSerializer
     end
   end
 end

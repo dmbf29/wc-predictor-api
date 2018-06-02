@@ -1,8 +1,6 @@
 module Api
   module V1
     class MatchSerializer < ActiveModel::Serializer
-      embed :ids, include: true
-
       attributes :id,
                  :kickoff_time,
                  :team_home_score,
