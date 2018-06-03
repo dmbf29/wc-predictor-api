@@ -6,5 +6,5 @@ class Group < ApplicationRecord
   belongs_to :winner, class_name: 'Team', foreign_key: 'winner_id', optional: true
   belongs_to :runner_up, class_name: 'Team', foreign_key: 'runner_id', optional: true
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { minimum: 2, maximum: 20 }
 end
