@@ -1,9 +1,11 @@
 module Api
   module V1
     class LeagueSerializer < ActiveModel::Serializer
-      attributes :id, :name, :password, :key
+      attributes :id, :name, :password, :key, :users
 
-      has_many :users
+      def users
+        object.users.order(score: :desc)
+      end
     end
   end
 end
