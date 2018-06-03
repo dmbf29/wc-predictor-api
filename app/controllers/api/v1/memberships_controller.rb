@@ -6,7 +6,7 @@ module Api::V1
       @membership = Membership.new
       @membership.user = current_user
       @membership.league = League.find_by(key: league_params[:key], password: league_params[:password])
-      render json: @membership.league, serializer: Api::V1::LeagueSerializer
+      render json: current_user.leagues, each_serializer: Api::V1::LeagueSerializer
     end
 
     private

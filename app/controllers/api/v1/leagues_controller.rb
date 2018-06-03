@@ -10,7 +10,6 @@ module Api::V1
     def create
       @league = League.new(league_params)
       if @league.save
-        user = get_user(membership_params[:user_token])
         Membership.create(user: current_user, league: @league)
       end
       render json: @league, serializer: Api::V1::LeagueSerializer
