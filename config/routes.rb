@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       resources :matches
       resources :groups
       resources :predictions
+      resources :leagues
+      resources :memberships
       post 'predictions/:id', to: 'predictions#update'
       post 'users', to: 'users#create'
       post 'user_token' => 'user_token#create'
