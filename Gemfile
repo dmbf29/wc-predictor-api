@@ -19,10 +19,10 @@ gem 'puma', '~> 3.7'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-
 gem 'active_model_serializers', '0.9.3'
 gem 'knock'
 gem 'rack-cors', require: 'rack/cors'
+gem "sentry-raven"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
