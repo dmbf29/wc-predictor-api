@@ -5,7 +5,8 @@ module Api::V1
     def create
       @membership = Membership.new
       @membership.user = current_user
-      @membership.league = League.find_by(key: league_params[:key], password: league_params[:password])
+      @membership.league = League.where('key = ? AND password ILIKE ?', league_params[:key], league_params[:password]).first
+      @membership.save
       render json: current_user.leagues, each_serializer: Api::V1::LeagueSerializer
     end
 
