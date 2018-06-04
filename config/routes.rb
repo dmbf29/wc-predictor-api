@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :memberships
       post 'predictions/:id', to: 'predictions#update'
       post 'users', to: 'users#create'
+      get 'user', to: 'users#show'
+      post 'user', to: 'users#update'
       post 'user_token' => 'user_token#create'
     end
   end
