@@ -8,7 +8,9 @@ module Api::V1
     end
 
     def create
-      @prediction = Prediction.create(prediction_params)
+      @prediction = Prediction.new(prediction_params)
+      @prediction.user = current_user
+      @prediction.save
       render json: @prediction, serializer: Api::V1::PredictionSerializer
     end
 
