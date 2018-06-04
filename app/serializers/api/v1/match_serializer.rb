@@ -18,7 +18,7 @@ module Api
       end
 
       def kickoff_time
-        object.kickoff_time.in_time_zone('Europe/Moscow').strftime("%d %b %R")
+        object.kickoff_time.in_time_zone(scope.timezone).strftime("%d %b %R")
       end
 
       def team_home

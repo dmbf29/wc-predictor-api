@@ -12,7 +12,9 @@ module Api::V1
       params.require(:user).permit(:name,
                                    :email,
                                    :password,
-                                   :password_confirmation)
+                                   :password_confirmation,
+                                   :notify,
+                                   :timezone)
     end
   end
 end
