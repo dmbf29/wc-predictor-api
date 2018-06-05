@@ -11,7 +11,8 @@ module Api
                  :score_quarters,
                  :score_semis,
                  :score_final,
-                 :picks
+                 :picks,
+                 :notify
 
       def picks
         object.predictions.count

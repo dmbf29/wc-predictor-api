@@ -6,8 +6,11 @@ module Api::V1
       @membership = Membership.new
       @membership.user = current_user
       @membership.league = League.where('key = ? AND password ILIKE ?', league_params[:key], league_params[:password]).first
-      @membership.save
-      render json: current_user.leagues, each_serializer: Api::V1::LeagueSerializer
+      if @membership.save
+        render json: @membership
+      else
+        render status: '400', json: { status: 'Membership not created' }.to_json
+      end
     end
 
     private

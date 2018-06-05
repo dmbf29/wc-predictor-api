@@ -13,8 +13,11 @@ module Api::V1
 
     def update
       @user = current_user
-      @user.update(user_params)
-      render json: @user
+      if @user.update(user_params)
+        render json: @user
+      else
+        render status: '400', json: { status: 'User not updated' }.to_json
+      end
     end
 
     private

@@ -11,8 +11,10 @@ module Api::V1
       @league = League.new(league_params)
       if @league.save
         Membership.create(user: current_user, league: @league)
+        render json: @league, serializer: Api::V1::LeagueSerializer
+      else
+        render status: '400', json: { status: 'League not created' }.to_json
       end
-      render json: @league, serializer: Api::V1::LeagueSerializer
     end
 
     private
