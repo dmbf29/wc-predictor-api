@@ -7,7 +7,8 @@ module Api
                  :name,
                  :abbrev,
                  :badge,
-                 :points
+                 :points,
+                 :ranking
     end
   end
 end

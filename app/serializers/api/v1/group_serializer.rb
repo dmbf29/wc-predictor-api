@@ -8,6 +8,10 @@ module Api
                  :round_id
 
       has_many :matches, serializer: Api::V1::MatchSerializer
+
+      def matches
+        object.matches.order(kickoff_time: :asc)
+      end
     end
   end
 end
