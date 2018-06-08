@@ -10,4 +10,8 @@ class League < ApplicationRecord
     self.key = id + 100
     save
   end
+
+  def matches
+    Match.all
+  end
 end

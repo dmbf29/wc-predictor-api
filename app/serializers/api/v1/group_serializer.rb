@@ -7,7 +7,7 @@ module Api
                  :runner_id,
                  :round_id
 
-      has_many :matches, serializer: Api::V1::MatchSerializer
+      has_many :matches, serializer: MatchSerializer
 
       def matches
         object.matches.order(kickoff_time: :asc)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606045951) do
+ActiveRecord::Schema.define(version: 20180608070741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20180606045951) do
   create_table "predictions", force: :cascade do |t|
     t.integer "winner_id"
     t.integer "loser_id"
-    t.boolean "draw"
+    t.boolean "draw", default: false
     t.boolean "correct"
     t.bigint "match_id"
     t.bigint "round_id"

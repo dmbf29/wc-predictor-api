@@ -3,12 +3,15 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :teams
-      resources :matches
-      resources :groups
-      resources :predictions
-      resources :leagues
-      resources :memberships
+      resources :teams, only: [:index]
+      resources :matches, only: [:index, :show]
+      resources :groups, only: [:index]
+      resources :predictions, only: [:index, :create, :update]
+      resources :leagues, only: [:index, :create] do
+        get '/groups/:id', to: 'league_groups#show'
+      end
+      resources :memberships, only: [:create]
+      get 'group_names', to: 'groups#names'
       post 'predictions/:id', to: 'predictions#update'
       post 'users', to: 'users#create'
       get 'user', to: 'users#show'

@@ -11,13 +11,18 @@ module Api
                  :team_away,
                  :group,
                  :round,
-                 :prediction
+                 :prediction,
+                 :team_home_names,
+                 :team_away_names,
+                 :draw_names
 
       def prediction
+        return '' if scope.class == League
         object.predictions.find_by(user: scope)
       end
 
       def kickoff_time
+        return '' if scope.class == League
         object.kickoff_time.in_time_zone(scope.timezone).strftime("%d %b %R")
       end
 
@@ -35,6 +40,21 @@ module Api
 
       def group
         object.group
+      end
+
+      def team_home_names
+        return '' if scope.class == User
+        object.predictions.joins(:user).where(winner_id: object.team_home.id, draw: false, user_id: scope.users.pluck(:id)).map { |p| p.user.name }
+      end
+
+      def team_away_names
+        return '' if scope.class == User
+        object.predictions.joins(:user).where(winner_id: object.team_away.id, draw: false, user_id: scope.users.pluck(:id)).map { |p| p.user.name }
+      end
+
+      def draw_names
+        return '' if scope.class == User
+        object.predictions.joins(:user).where(draw: true, user_id: scope.users.pluck(:id)).map { |p| p.user.name }
       end
     end
   end
