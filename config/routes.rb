@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.admin } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   post 'user_token' => 'user_token#create'
 
   namespace :api do

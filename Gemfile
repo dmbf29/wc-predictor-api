@@ -23,6 +23,8 @@ gem 'active_model_serializers', '0.9.3'
 gem 'knock'
 gem 'rack-cors', require: 'rack/cors'
 gem "sentry-raven"
+gem 'sidekiq'
+gem 'sidekiq-failures', '~> 1.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
