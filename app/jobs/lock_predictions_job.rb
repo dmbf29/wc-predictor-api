@@ -3,7 +3,7 @@ class LockPredictionsJob < ApplicationJob
 
   def perform(match_id)
     match = Match.find(match_id)
-    match.finished = true
+    match.started = true
     match.save
   end
 end
