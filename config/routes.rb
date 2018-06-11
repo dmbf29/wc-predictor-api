@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post 'predictions/:id', to: 'predictions#update'
       post 'users', to: 'users#create'
       get 'user', to: 'users#show'
+      get 'users', to: 'users#index'
       post 'user', to: 'users#update'
       post 'user_token' => 'user_token#create'
     end

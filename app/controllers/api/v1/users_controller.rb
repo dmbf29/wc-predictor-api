@@ -3,6 +3,12 @@ module Api
     class UsersController < ApplicationController
       before_action :authenticate_user, only: [:show, :update]
 
+      def index
+        @users = User.all.order(score: :desc).take(10)
+        @users << current_user unless @users.include?(current_user)
+        render json: @users, each_serializer: UserSerializer, leaderboard: true
+      end
+
       def create
         @user = User.create(user_params)
         render json: @user
