@@ -227,8 +227,8 @@ C2 = Team.where(
       ).first_or_create
 
 D1 = Team.where(
-        name: 'Group C Winner',
-        abbrev: '1C'
+        name: 'Group D Winner',
+        abbrev: '1D'
       ).first_or_create
 
 D2 = Team.where(
@@ -276,10 +276,10 @@ H2 = Team.where(
         abbrev: '2G'
       ).first_or_create
 
-%w(49..62).to_a.each do |w|
+(49..62).to_a.each do |w|
   Team.where(
-    name: ('Winner of ' + w),
-    abbrev: w
+    name: ('Winner of ' + w.to_s),
+    abbrev: ('W' + w)
   ).first_or_create
 end
 
