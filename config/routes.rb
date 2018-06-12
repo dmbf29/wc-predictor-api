@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         get '/groups/:id', to: 'league_groups#show'
       end
       resources :memberships, only: [:create]
+      get 'knockouts', to: 'knockouts#index'
       get 'group_names', to: 'groups#names'
       post 'predictions/:id', to: 'predictions#update'
       post 'users', to: 'users#create'
