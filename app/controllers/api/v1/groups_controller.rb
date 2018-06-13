@@ -4,12 +4,14 @@ module Api
       before_action :authenticate_user
 
       def index
-        groups = Group.all.order(id: :asc)
+        # Only Group Stage
+        groups = Group.all.order(id: :asc).take(8)
         render json: groups, each_serializer: GroupSerializer, scope: current_user
       end
 
       def names
-        groups = Group.all.order(id: :asc)
+        # Only Group Stage
+        groups = Group.all.order(id: :asc).take(8)
         render json: groups
       end
     end
