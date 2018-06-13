@@ -10,7 +10,8 @@ module Api
       end
 
       def names
-        groups = Group.all.order(id: :asc)
+        # Only Group Stage
+        groups = Group.all.order(id: :asc).take(8)
         render json: groups
       end
     end
