@@ -12,7 +12,7 @@ class CalculateScoresJob < ApplicationJob
     html_doc = Nokogiri::HTML(html_file)
 
     puts 'Looking at fixtures...'
-    html_doc.search('.fi-mu.fixture').each do |element|
+    html_doc.search('.fi-mu.result').each do |element|
 
       puts 'Finding Team Names...'
       team_home_name = element.search('.fi-t.fi-i--4.home').search('.fi-t__nText').text.strip
@@ -23,8 +23,9 @@ class CalculateScoresJob < ApplicationJob
       puts '*********'
 
       puts 'Finding Team Scores...'
-      team_home_score = "" # TODO
-      team_away_score = "" # TODO
+      final_score = element.search('.fi-s').search('.fi-s__scoreText').text.strip
+      team_home_score = final_score.split("-")[0]
+      team_away_score = final_score.split("-")[1]
       puts '*********'
       puts team_home_score
       puts team_away_score
