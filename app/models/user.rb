@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :predictions, dependent: :destroy
   validates :name, presence: true, length: { minimum: 2, maximum: 30 }
   validates :email, presence: true, uniqueness: true, length: { minimum: 2, maximum: 30 }
-  validates :password, presence: true, length: { minimum: 2, maximum: 30 }
+  validates :password, presence: true, length: { minimum: 2, maximum: 30 }, on: :create
   validates :timezone, presence: true
 
   has_secure_password

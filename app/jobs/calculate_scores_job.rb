@@ -23,8 +23,8 @@ class CalculateScoresJob < ApplicationJob
       puts '*********'
 
       puts 'Finding Team Scores...'
-      team_home_score = "TODO"
-      team_away_score = "TODO"
+      team_home_score = "" # TODO
+      team_away_score = "" # TODO
       puts '*********'
       puts team_home_score
       puts team_away_score
@@ -52,64 +52,74 @@ class CalculateScoresJob < ApplicationJob
         puts '*********'
       end
       next if match.nil?
-
-      if team_home_score > team_away_score
-        match.finished = true
-        match.draw = false
-        match.winner_id = team_home.id
-        match.team_home_score = team_home_score
-        match.team_away_score = team_away_score
-        if match.save
-          match.predections.where(winner_id: team_home.id).each do |predection|
-            predection.correct = true
-            user = predection.user
-            user.score += 3
-            user.score_group += 3
-            predection.save
-            user.save
+      ActiveRecord::Base.transaction do
+        if team_home_score > team_away_score
+          match.finished = true
+          match.draw = false
+          match.winner_id = team_home.id
+          match.team_home_score = team_home_score
+          match.team_away_score = team_away_score
+          if match.save
+            puts '*********'
+            puts "Match #{match.id} updated. Home Wins **"
+            puts '*********'
+            match.predictions.where(winner_id: team_home.id).each do |prediction|
+              prediction.correct = true
+              user = prediction.user
+              user.score += 3
+              user.score_group += 3
+              prediction.save
+              user.save
+            end
+            (match.predictions.where.not(winner_id: team_home.id) + match.predictions.where(draw: true)).each do |prediction|
+              prediction.correct = false
+              prediction.save
+            end
           end
-          match.predections.where.not(winner_id: team_home.id).each do |predection|
-            predection.correct = false
-            predection.save
+        elsif team_home_score < team_away_score
+          match.finished = true
+          match.draw = false
+          match.winner_id = team_away.id
+          match.team_home_score = team_home_score
+          match.team_away_score = team_away_score
+          if match.save
+            puts '*********'
+            puts "Match #{match.id} updated. Away Wins **"
+            puts '*********'
+            match.predictions.where(winner_id: team_away.id).each do |prediction|
+              prediction.correct = true
+              user = prediction.user
+              user.score += 3
+              user.score_group += 3
+              prediction.save
+              user.save
+            end
+            (match.predictions.where.not(winner_id: team_away.id) + match.predictions.where(draw: true)).each do |prediction|
+              prediction.correct = false
+              prediction.save
+            end
           end
-        end
-      elsif team_home_score < team_away_score
-        match.finished = true
-        match.draw = false
-        match.winner_id = team_away.id
-        match.team_home_score = team_home_score
-        match.team_away_score = team_away_score
-        if match.save
-          match.predections.where(winner_id: team_away.id).each do |predection|
-            predection.correct = true
-            user = predection.user
-            user.score += 3
-            user.score_group += 3
-            predection.save
-            user.save
-          end
-          match.predections.where.not(winner_id: team_away.id).each do |predection|
-            predection.correct = false
-            predection.save
-          end
-        end
-      elsif team_home_score == team_away_score
-        match.finished = true
-        match.draw = true
-        match.team_home_score = team_home_score
-        match.team_away_score = team_away_score
-        if match.save
-          match.predections.where(draw: true).each do |predection|
-            predection.correct = true
-            user = predection.user
-            user.score += 3
-            user.score_group += 3
-            predection.save
-            user.save
-          end
-          match.predections.where.not(draw: true).each do |predection|
-            predection.correct = false
-            predection.save
+        elsif team_home_score == team_away_score
+          match.finished = true
+          match.draw = true
+          match.team_home_score = team_home_score
+          match.team_away_score = team_away_score
+          if match.save
+            puts '*********'
+            puts "Match #{match.id} updated. Draw **"
+            puts '*********'
+            match.predictions.where(draw: true).each do |prediction|
+              prediction.correct = true
+              user = prediction.user
+              user.score += 3
+              user.score_group += 3
+              prediction.save
+              user.save
+            end
+            match.predictions.where.not(draw: true).each do |prediction|
+              prediction.correct = false
+              prediction.save
+            end
           end
         end
       end
