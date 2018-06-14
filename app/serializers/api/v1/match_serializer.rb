@@ -9,6 +9,8 @@ module Api
                  :finished,
                  :team_home,
                  :team_away,
+                 :winner_id,
+                 :draw,
                  :group,
                  :round,
                  :prediction,
