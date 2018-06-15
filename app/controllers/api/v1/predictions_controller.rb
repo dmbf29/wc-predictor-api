@@ -17,8 +17,12 @@ module Api
 
       def update
         @prediction = Prediction.find(params[:id])
-        @prediction.update(prediction_params)
-        render json: @prediction, serializer: PredictionSerializer
+        if @prediction.user == current_user
+          @prediction.update(prediction_params)
+          render json: @prediction, serializer: PredictionSerializer
+        else
+          render status: '400', json: { status: 'Wrong user' }.to_json
+        end
       end
 
       private
