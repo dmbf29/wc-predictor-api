@@ -5,4 +5,11 @@ class Prediction < ApplicationRecord
   belongs_to :winner, class_name: 'Team', foreign_key: 'winner_id', optional: true
   belongs_to :loser, class_name: 'Team', foreign_key: 'loser_id', optional: true
   validates_uniqueness_of :user_id, scope: :match_id, on: :create
+  validate :game_not_finished
+
+  def game_not_finished
+    if match.finished
+      errors.add(:match_id, "Match already finished")
+    end
+  end
 end
