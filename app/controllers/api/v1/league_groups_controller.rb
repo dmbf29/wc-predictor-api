@@ -12,7 +12,7 @@ module Api
       def show
         group = Group.find(params[:id])
         league = League.find(params[:league_id])
-        render json: group.matches, each_serializer: MatchSerializer, scope: league
+        render json: group.matches.order(kickoff_time: :asc), each_serializer: MatchSerializer, scope: league
       end
     end
   end

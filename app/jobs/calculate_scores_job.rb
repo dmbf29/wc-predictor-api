@@ -55,12 +55,11 @@ class CalculateScoresJob < ApplicationJob
       next if match.nil?
       ActiveRecord::Base.transaction do
         if team_home_score > team_away_score
-          match.finished = true
           match.draw = false
           match.winner_id = team_home.id
           match.team_home_score = team_home_score
           match.team_away_score = team_away_score
-          if match.save
+          if match.valid?
             puts '*********'
             puts "Match #{match.id} updated. Home Wins **"
             puts '*********'
@@ -76,14 +75,15 @@ class CalculateScoresJob < ApplicationJob
               prediction.correct = false
               prediction.save
             end
+            match.finished = true
+            match.save
           end
         elsif team_home_score < team_away_score
-          match.finished = true
           match.draw = false
           match.winner_id = team_away.id
           match.team_home_score = team_home_score
           match.team_away_score = team_away_score
-          if match.save
+          if match.valid?
             puts '*********'
             puts "Match #{match.id} updated. Away Wins **"
             puts '*********'
@@ -99,13 +99,14 @@ class CalculateScoresJob < ApplicationJob
               prediction.correct = false
               prediction.save
             end
+            match.finished = true
+            match.save
           end
         elsif team_home_score == team_away_score
-          match.finished = true
           match.draw = true
           match.team_home_score = team_home_score
           match.team_away_score = team_away_score
-          if match.save
+          if match.valid?
             puts '*********'
             puts "Match #{match.id} updated. Draw **"
             puts '*********'
@@ -121,6 +122,8 @@ class CalculateScoresJob < ApplicationJob
               prediction.correct = false
               prediction.save
             end
+            match.finished = true
+            match.save
           end
         end
       end
