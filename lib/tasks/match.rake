@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 
+
 namespace :match do
   desc 'Schedules kickoffs for matches'
   task lock_predictions: :environment do
@@ -8,6 +9,102 @@ namespace :match do
     matches.each do |match|
       LockPredictionsJob.set(wait_until: Time.parse(match.kickoff_time)).perform_later(match.id)
     end
+  end
+
+  desc 'Schedules kickoffs for matches'
+  task next_knockout_matches: :environment do
+    #Round of 16 matches
+    round = Round.find_by(number: 2)
+    matches = round.matches
+    winner = Team.find_by(name: "Group A Winner")
+    match = matches.find_by(team_home: winner)
+    quarter_match = Match.find_by(team_home: Team.find_by(abbrev: 'W49'))
+    match.next_match = quarter_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Group C Winner")
+    match = matches.find_by(team_home: winner)
+    match.next_match = quarter_match
+    match.next_match_home = false
+    match.save
+
+    winner = Team.find_by(name: "Group B Winner")
+    match = matches.find_by(team_home: winner)
+    quarter_match = Match.find_by(team_home: Team.find_by(abbrev: 'W51'))
+    match.next_match = quarter_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Group D Winner")
+    match = matches.find_by(team_home: winner)
+    match.next_match = quarter_match
+    match.next_match_home = false
+    match.save
+
+    winner = Team.find_by(name: "Group E Winner")
+    match = matches.find_by(team_home: winner)
+    quarter_match = Match.find_by(team_home: Team.find_by(abbrev: 'W53'))
+    match.next_match = quarter_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Group G Winner")
+    match = matches.find_by(team_home: winner)
+    match.next_match = quarter_match
+    match.next_match_home = false
+    match.save
+
+    winner = Team.find_by(name: "Group F Winner")
+    match = matches.find_by(team_home: winner)
+    quarter_match = Match.find_by(team_home: Team.find_by(abbrev: 'W55'))
+    match.next_match = quarter_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Group H Winner")
+    match = matches.find_by(team_home: winner)
+    match.next_match = quarter_match
+    match.next_match_home = false
+    match.save
+
+    # Quarterfinal matches
+    round = Round.find_by(number: 3)
+    matches = round.matches
+    winner = Team.find_by(name: "Winner of 49")
+    match = matches.find_by(team_home: winner)
+    semi_match = Match.find_by(team_home: Team.find_by(abbrev: 'W57'))
+    match.next_match = semi_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Winner of 53")
+    match = matches.find_by(team_home: winner)
+    match.next_match = semi_match
+    match.next_match_home = false
+    match.save
+
+    winner = Team.find_by(name: "Winner of 51")
+    match = matches.find_by(team_home: winner)
+    semi_match = Match.find_by(team_home: Team.find_by(abbrev: 'W59'))
+    match.next_match = semi_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Winner of 55")
+    match = matches.find_by(team_home: winner)
+    match.next_match = semi_match
+    match.next_match_home = false
+    match.save
+
+    # Semifinal matches
+    round = Round.find_by(number: 4)
+    matches = round.matches
+    winner = Team.find_by(name: "Winner of 57")
+    match = matches.find_by(team_home: winner)
+    final_match = Match.find_by(team_home: Team.find_by(abbrev: 'W61'))
+    match.next_match = final_match
+    match.next_match_home = true
+    match.save
+    winner = Team.find_by(name: "Winner of 59")
+    match = matches.find_by(team_home: winner)
+    match.next_match = final_match
+    match.next_match_home = false
+    match.save
   end
 
   desc 'Seeds knockout round games'

@@ -11,14 +11,18 @@ module Api
       def create
         @prediction = Prediction.new(prediction_params)
         @prediction.user = current_user
-        @prediction.save
-        render json: @prediction, serializer: PredictionSerializer
+        if @prediction.save
+          @prediction.configure_knockout
+          render json: @prediction, serializer: PredictionSerializer
+        else
+          render status: '400', json: { status: 'Could not save' }.to_json
+        end
       end
 
       def update
         @prediction = Prediction.find(params[:id])
-        if @prediction.user == current_user
-          @prediction.update(prediction_params)
+        if @prediction.user == current_user &&  @prediction.update(prediction_params)
+          @prediction.configure_knockout
           render json: @prediction, serializer: PredictionSerializer
         else
           render status: '400', json: { status: 'Wrong user' }.to_json
