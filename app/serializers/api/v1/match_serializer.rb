@@ -16,11 +16,17 @@ module Api
                  :prediction,
                  :team_home_names,
                  :team_away_names,
-                 :draw_names
+                 :draw_names,
+                 :next_match
 
       def prediction
         return '' if scope.class == League
-        object.predictions.find_by(user: scope)
+        prediction = object.predictions.find_by(user: scope)
+        PredictionSerializer.new(prediction).attributes if prediction
+      end
+
+      def next_match
+        object.next_match
       end
 
       def kickoff_time
