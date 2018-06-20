@@ -30,24 +30,28 @@ namespace :match do
 
     winner = Team.find_by(name: "Group B Winner")
     match = matches.find_by(team_home: winner)
+    match.group = Group.find_by(name: "Right Sixteen")
     quarter_match = Match.find_by(team_home: Team.find_by(abbrev: 'W51'))
     match.next_match = quarter_match
     match.next_match_home = true
     match.save
     winner = Team.find_by(name: "Group D Winner")
     match = matches.find_by(team_home: winner)
+    match.group = Group.find_by(name: "Right Sixteen")
     match.next_match = quarter_match
     match.next_match_home = false
     match.save
 
     winner = Team.find_by(name: "Group E Winner")
     match = matches.find_by(team_home: winner)
+    match.group = Group.find_by(name: "Left Sixteen")
     quarter_match = Match.find_by(team_home: Team.find_by(abbrev: 'W53'))
     match.next_match = quarter_match
     match.next_match_home = true
     match.save
     winner = Team.find_by(name: "Group G Winner")
     match = matches.find_by(team_home: winner)
+    match.group = Group.find_by(name: "Left Sixteen")
     match.next_match = quarter_match
     match.next_match_home = false
     match.save
