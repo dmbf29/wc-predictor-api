@@ -65,11 +65,7 @@ class CalculateScoresJob < ApplicationJob
             puts '*********'
             match.predictions.where(winner_id: team_home.id).each do |prediction|
               prediction.correct = true
-              user = prediction.user
-              user.score += 3
-              user.score_group += 3
               prediction.save
-              user.save
             end
             (match.predictions.where.not(winner_id: team_home.id) + match.predictions.where(draw: true)).each do |prediction|
               prediction.correct = false
@@ -89,11 +85,7 @@ class CalculateScoresJob < ApplicationJob
             puts '*********'
             match.predictions.where(winner_id: team_away.id).each do |prediction|
               prediction.correct = true
-              user = prediction.user
-              user.score += 3
-              user.score_group += 3
               prediction.save
-              user.save
             end
             (match.predictions.where.not(winner_id: team_away.id) + match.predictions.where(draw: true)).each do |prediction|
               prediction.correct = false
@@ -112,11 +104,7 @@ class CalculateScoresJob < ApplicationJob
             puts '*********'
             match.predictions.where(draw: true).each do |prediction|
               prediction.correct = true
-              user = prediction.user
-              user.score += 3
-              user.score_group += 3
               prediction.save
-              user.save
             end
             match.predictions.where.not(draw: true).each do |prediction|
               prediction.correct = false
