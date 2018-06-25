@@ -116,6 +116,8 @@ class CalculateScoresJob < ApplicationJob
         end
       end
     end
+    puts "running points job"
     AddPointsJob.perform_now
+    puts "points job added to queue"
   end
 end
