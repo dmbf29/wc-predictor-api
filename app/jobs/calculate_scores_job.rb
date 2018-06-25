@@ -116,5 +116,6 @@ class CalculateScoresJob < ApplicationJob
         end
       end
     end
+    AddPointsJob.perform_now
   end
 end
