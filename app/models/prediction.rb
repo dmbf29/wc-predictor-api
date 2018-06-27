@@ -8,10 +8,17 @@ class Prediction < ApplicationRecord
   belongs_to :team_away, class_name: 'Team', foreign_key: 'team_away_id', optional: true
   validates_uniqueness_of :user_id, scope: :match_id, on: :create
   validate :game_not_finished
+  validate :real_team
 
   def game_not_finished
     if match.finished
       errors.add(:match_id, 'Match already finished')
+    end
+  end
+
+  def real_team
+    if winner && winner.ranking.nil?
+      errors.add(:winner_id, 'This is not a real team')
     end
   end
 

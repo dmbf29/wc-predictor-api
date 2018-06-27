@@ -7,4 +7,11 @@ namespace :user do
       puts "Job checking for #{match.team_home.name} vs. #{match.team_away.name} @ #{match.kickoff_time}"
     end
   end
+
+  desc "Email users knockout stage is available for picking"
+  task notify: :environment do
+    User.where(notify: true).each do |user|
+      UserMailer.knockout_stage(user).deliver_later
+    end
+  end
 end
