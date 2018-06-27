@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'douglasmberkley@gmail.com'
+  default from: 'world.cup.predict@gmail.com'
 
   layout 'mailer'
 end
