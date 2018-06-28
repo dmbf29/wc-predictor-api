@@ -6,7 +6,7 @@ class Prediction < ApplicationRecord
   belongs_to :loser, class_name: 'Team', foreign_key: 'loser_id', optional: true
   belongs_to :team_home, class_name: 'Team', foreign_key: 'team_home_id', optional: true
   belongs_to :team_away, class_name: 'Team', foreign_key: 'team_away_id', optional: true
-  validates_uniqueness_of :user_id, scope: :match_id, on: :create
+  # validates_uniqueness_of :user_id, scope: :match_id, on: :create
   validate :game_not_finished
   validate :real_team
 
