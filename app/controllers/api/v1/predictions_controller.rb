@@ -1,7 +1,7 @@
 module Api
   module V1
     class PredictionsController < ApplicationController
-      # before_action :authenticate_user
+      before_action :authenticate_user
 
       def index
         predictions = Prediction.all
@@ -21,7 +21,7 @@ module Api
 
       def update
         @prediction = Prediction.find(params[:id])
-        if @prediction.update(prediction_params)
+        if @prediction.user == current_user &&  @prediction.update(prediction_params)
           @prediction.configure_knockout
           render json: @prediction, serializer: PredictionSerializer
         else
