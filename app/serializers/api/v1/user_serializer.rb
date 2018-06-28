@@ -12,12 +12,26 @@ module Api
                  :score_semis,
                  :score_final,
                  :picks,
+                 :knockout_picks,
                  :notify,
                  :position
 
       def picks
         object.predictions.count
       end
+
+      def knockout_picks
+        object.predictions.where.not(round: Round.first).count
+      end
+
+      # def champion
+      #   final = object.predictions.find_by(round: Round.last)
+      #   if final.nil?
+      #     return 'N/A'
+      #   else
+      #     final.winner.name
+      #   end
+      # end
 
       def position
         return '' unless serialization_options[:leaderboard]
