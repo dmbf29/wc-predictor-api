@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   post 'user_token' => 'user_token#create'
 
+  get 'england', to: 'deciders#england'
+  get 'belgium', to: 'deciders#belgium'
+
   namespace :api do
     namespace :v1 do
       resources :teams, only: [:index]
