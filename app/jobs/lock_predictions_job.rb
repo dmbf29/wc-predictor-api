@@ -1,9 +1,10 @@
 class LockPredictionsJob < ApplicationJob
   queue_as :default
 
-  def perform(match_id)
-    match = Match.find(match_id)
-    match.started = true
-    match.save
+  def perform
+    Match.where(started: false).each do |match|
+      match.started = true
+      match.save
+    end
   end
 end
