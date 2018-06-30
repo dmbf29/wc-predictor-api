@@ -5,7 +5,7 @@ class CalculateScoresJob < ApplicationJob
   queue_as :default
 
   def perform
-    url = 'https://www.fifa.com/worldcup/matches/'
+    url = 'https://www.fifa.com/worldcup/matches/#knockoutphase'
 
     puts 'Reading Fifa website...'
     html_file = open(url).read
@@ -94,25 +94,25 @@ class CalculateScoresJob < ApplicationJob
             match.finished = true
             match.save
           end
-        elsif team_home_score == team_away_score
-          match.draw = true
-          match.team_home_score = team_home_score
-          match.team_away_score = team_away_score
-          if match.valid?
-            puts '*********'
-            puts "Match #{match.id} updated. Draw **"
-            puts '*********'
-            match.predictions.where(draw: true).each do |prediction|
-              prediction.correct = true
-              prediction.save
-            end
-            match.predictions.where.not(draw: true).each do |prediction|
-              prediction.correct = false
-              prediction.save
-            end
-            match.finished = true
-            match.save
-          end
+        # elsif team_home_score == team_away_score
+        #   match.draw = true
+        #   match.team_home_score = team_home_score
+        #   match.team_away_score = team_away_score
+          # if match.valid?
+          #   puts '*********'
+          #   puts "Match #{match.id} updated. Draw **"
+          #   puts '*********'
+          #   match.predictions.where(draw: true).each do |prediction|
+          #     prediction.correct = true
+          #     prediction.save
+          #   end
+          #   match.predictions.where.not(draw: true).each do |prediction|
+          #     prediction.correct = false
+          #     prediction.save
+          #   end
+          #   match.finished = true
+          #   match.save
+          # end
         end
       end
     end
