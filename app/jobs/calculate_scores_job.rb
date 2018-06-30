@@ -57,6 +57,7 @@ class CalculateScoresJob < ApplicationJob
         if team_home_score > team_away_score
           match.draw = false
           match.winner_id = team_home.id
+          match.loser_id = team_away.id
           match.team_home_score = team_home_score
           match.team_away_score = team_away_score
           if match.valid?
@@ -71,12 +72,19 @@ class CalculateScoresJob < ApplicationJob
               prediction.correct = false
               prediction.save
             end
+            # Prediction.where('round_id > ?', match.round.id).where('team_home_id = ? OR team_away_id = ?', match.team_away.id, match.team_away.id)
+            further_wrong_predictions = Prediction.where('winner_id = ? AND round_id > ?', match.team_away.id, match.round.id)
+            further_wrong_predictions.each do |prediction|
+              prediction.correct = false
+              prediction.save
+            end
             match.finished = true
             match.save
           end
         elsif team_home_score < team_away_score
           match.draw = false
           match.winner_id = team_away.id
+          match.loser_id = team_home.id
           match.team_home_score = team_home_score
           match.team_away_score = team_away_score
           if match.valid?
@@ -88,6 +96,11 @@ class CalculateScoresJob < ApplicationJob
               prediction.save
             end
             (match.predictions.where.not(winner_id: team_away.id) + match.predictions.where(draw: true)).each do |prediction|
+              prediction.correct = false
+              prediction.save
+            end
+            further_wrong_predictions = Prediction.where('winner_id = ? AND round_id > ?', match.team_home.id, match.round.id)
+            further_wrong_predictions.each do |prediction|
               prediction.correct = false
               prediction.save
             end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180617075927) do
+ActiveRecord::Schema.define(version: 20180630185928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20180617075927) do
     t.boolean "draw"
     t.bigint "next_match_id"
     t.boolean "next_match_home"
+    t.integer "loser_id"
     t.index ["group_id"], name: "index_matches_on_group_id"
     t.index ["round_id"], name: "index_matches_on_round_id"
   end
