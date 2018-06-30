@@ -13,6 +13,13 @@ module Api
         groups = Group.all.order(id: :asc)
         render json: groups
       end
+
+      def show
+        # Only Knockout round
+        user_provided = User.find(params[:id])
+        knockouts = Group.all.order(id: :desc).take(7).reverse
+        render json: knockouts, each_serializer: GroupSerializer, scope: user_provided
+      end
     end
   end
 end

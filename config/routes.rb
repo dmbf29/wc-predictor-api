@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       end
       resources :memberships, only: [:create]
       get 'knockouts', to: 'knockouts#index'
+      get 'knockouts/:id', to: 'knockouts#show'
       get 'group_names', to: 'groups#names'
       post 'predictions/:id', to: 'predictions#update'
       post 'users', to: 'users#create'
