@@ -12,6 +12,7 @@ module Api
                  :score_semis,
                  :score_final,
                  :picks,
+                 :knockout_picks,
                  :champion,
                  :notify,
                  :position
@@ -29,7 +30,7 @@ module Api
         if final.nil?
           return 'N/A'
         else
-          final.winner.name
+          return final.winner.name
         end
       end
 
