@@ -13,6 +13,7 @@ module Api
                  :score_final,
                  :picks,
                  :knockout_picks,
+                 :champion,
                  :notify,
                  :position
 
@@ -24,14 +25,11 @@ module Api
         object.predictions.where.not(round: Round.first).count
       end
 
-      # def champion
-      #   final = object.predictions.find_by(round: Round.last)
-      #   if final.nil?
-      #     return 'N/A'
-      #   else
-      #     return final.winner.name
-      #   end
-      # end
+      def champion
+        final = object.predictions.find_by(round: Round.last)
+        return 'N.A' if final.nil? || final.winner.nil?
+        final.winner.name
+      end
 
       def position
         return '' unless serialization_options[:leaderboard]
