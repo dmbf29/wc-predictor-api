@@ -53,8 +53,10 @@ class CalculateScoresJob < ApplicationJob
         puts '*********'
       end
       next if match.nil?
+      draw = (team_home_score == team_away_score)
+      winner_name = element.search('.fi-mu__reasonwin-text').text.strip.split(" ")[0] if draw
       ActiveRecord::Base.transaction do
-        if team_home_score > team_away_score
+        if team_home_score > team_away_score || (draw && winner_name == team_home.name)
           match.draw = false
           match.winner_id = team_home.id
           match.loser_id = team_away.id
@@ -81,7 +83,7 @@ class CalculateScoresJob < ApplicationJob
             match.finished = true
             match.save
           end
-        elsif team_home_score < team_away_score
+        elsif team_home_score < team_away_score || (draw && winner_name == team_away.name)
           match.draw = false
           match.winner_id = team_away.id
           match.loser_id = team_home.id
@@ -108,6 +110,8 @@ class CalculateScoresJob < ApplicationJob
             match.save
           end
         # elsif team_home_score == team_away_score
+        #   team_home_name = element.search('.fi-mu__reasonwin-text').text.strip
+
         #   match.draw = true
         #   match.team_home_score = team_home_score
         #   match.team_away_score = team_away_score
